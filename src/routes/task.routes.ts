@@ -1,18 +1,16 @@
 import Router from '@koa/router'
-
-interface ServiceReqBody {
-  name?: string
-}
+import taskController from '../controllers/task.controller'
 
 const router = new Router()
 
-router.get('/', ctx => {
-  ctx.body = 'Hello World GET'
-})
+router.get('/', taskController.getAllTasks)
 
-router.post('/', ctx => {
-  const reqBody = ctx.request.body as ServiceReqBody
-  ctx.body = `Hello ${reqBody.name || 'World'} POST`
-})
+router.get('/:id', taskController.getTask)
+
+router.post('/', taskController.createTask)
+
+router.put('/:id', taskController.updateTask)
+
+router.delete('/:id', taskController.deleteTask)
 
 export default router
