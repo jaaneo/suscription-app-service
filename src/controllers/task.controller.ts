@@ -29,14 +29,25 @@ async function createTask (ctx: Context) {
   })
   const response = await newTask.save()
   ctx.body = response
+  ctx.status = 201
 }
 
-function updateTask (ctx: Context) {
-  ctx.body = 'Update a task'
+async function updateTask (ctx: Context) {
+  const id = ctx.params.id as string
+  const payload = ctx.request.body as Partial<TaskInputDTO>
+  const updatedTask = await Task.findOneAndUpdate({ id }, payload, { new: true })
+
+  if (updatedTask) {
+    ctx.body = updatedTask.toJSON()
+  } else {
+    ctx.status = 404
+  }
 }
 
-function deleteTask (ctx: Context) {
-  ctx.body = 'Delete a task'
+async function deleteTask (ctx: Context) {
+  const id = ctx.params.id as string
+  await Task.findOneAndDelete({ id })
+  ctx.status = 204
 }
 
 export default {
