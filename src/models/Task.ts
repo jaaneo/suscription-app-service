@@ -1,6 +1,7 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose from 'mongoose'
 
 const TaskSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
   title: String,
   description: String,
   done: Boolean

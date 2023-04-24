@@ -1,7 +1,10 @@
+import dotenv from 'dotenv'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import mongoose from 'mongoose'
 import router from './routes'
+
+dotenv.config()
 
 const app = new Koa()
 
@@ -10,7 +13,7 @@ app.use(bodyParser())
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-mongoose.connect('mongodb+srv://root:root@cluster0.uugf9ir.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URI || '')
   .then(() => {
     console.log('Connected to MondoDB')
     app.listen(3000, () => {

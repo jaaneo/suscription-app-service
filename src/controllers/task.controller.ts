@@ -1,18 +1,32 @@
 import { Context } from 'koa'
+import { nanoid } from 'nanoid'
 import { TaskInputDTO } from '../@types/dto'
 import Task from '../models/Task'
 
-function getAllTasks (ctx: Context) {
-  ctx.body = 'Get all taks'
+async function getAllTasks (ctx: Context) {
+  const tasks = await Task.find()
+  const jsonTasks = tasks.map(task => task.toJSON())
+  ctx.body = jsonTasks
 }
 
-function getTask (ctx: Context) {
-  ctx.body = 'Get task'
+async function getTask (ctx: Context) {
+  const id = ctx.params.id as string
+
+  const task = await Task.findOne({ id })
+
+  if (task) {
+    ctx.body = task
+  } else {
+    ctx.status = 404
+  }
 }
 
 async function createTask (ctx: Context) {
   const payload = ctx.request.body as TaskInputDTO
-  const newTask = new Task(payload)
+  const newTask = new Task({
+    id: nanoid(),
+    ...payload
+  })
   const response = await newTask.save()
   ctx.body = response
 }
