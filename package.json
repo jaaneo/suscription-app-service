@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@koa/router": "12.0.0",
+    "bcryptjs": "2.4.3",
     "dotenv": "16.0.3",
     "joi": "17.9.2",
     "koa": "2.14.2",
@@ -29,6 +30,7 @@
     "@types/koa": "2.13.6",
     "@types/koa-bodyparser": "4.3.10",
     "@types/koa__router": "12.0.0",
+    "@types/mongodb": "4.0.7",
     "@typescript-eslint/eslint-plugin": "5.58.0",
     "@typescript-eslint/parser": "5.58.0",
     "eslint": "8.38.0",

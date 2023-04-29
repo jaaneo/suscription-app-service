@@ -3,7 +3,7 @@ import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import mongoose from 'mongoose'
 import router from './routes'
-import errorHandler from './@types/errorHandler'
+import errorHandler from './middleware/errorHandler'
 
 dotenv.config()
 

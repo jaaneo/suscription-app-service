@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import taskController from '../controllers/task.controller'
+import taskController from '../controllers/task.controllers'
 
 const router = new Router()
 
