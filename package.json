@@ -24,7 +24,7 @@
     "nanoid": "3.3.4"
   },
   "devDependencies": {
-    "@types/dotenv": "^8.2.0",
+    "@types/dotenv": "8.2.0",
     "@types/jest": "29.5.0",
     "@types/koa": "2.13.6",
     "@types/koa-bodyparser": "4.3.10",

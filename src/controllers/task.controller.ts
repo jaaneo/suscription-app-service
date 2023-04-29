@@ -1,7 +1,10 @@
+import { ValidationError } from 'joi'
 import { Context } from 'koa'
 import { nanoid } from 'nanoid'
 import { TaskInputDTO } from '../@types/dto'
 import Task from '../models/Task'
+import { taskCreateSchema, taskUpdateSchema } from '../schemas/task.schemas'
+import ServiceError from '../errors/ServiceError'
 
 async function getAllTasks (ctx: Context) {
   const tasks = await Task.find()
@@ -23,24 +26,47 @@ async function getTask (ctx: Context) {
 
 async function createTask (ctx: Context) {
   const payload = ctx.request.body as TaskInputDTO
-  const newTask = new Task({
-    id: nanoid(),
-    ...payload
-  })
-  const response = await newTask.save()
-  ctx.body = response
-  ctx.status = 201
+
+  try {
+    const validated: TaskInputDTO = await taskCreateSchema.validateAsync(payload)
+
+    const newTask = new Task({
+      id: nanoid(),
+      ...validated
+    })
+    const response = await newTask.save()
+    ctx.body = response
+    ctx.status = 201
+  } catch (err) {
+    const validationError = err as ValidationError
+    if (validationError.isJoi) {
+      throw new ServiceError(400, validationError.message)
+    }
+    throw err
+  }
 }
 
 async function updateTask (ctx: Context) {
   const id = ctx.params.id as string
   const payload = ctx.request.body as Partial<TaskInputDTO>
-  const updatedTask = await Task.findOneAndUpdate({ id }, payload, { new: true })
 
-  if (updatedTask) {
-    ctx.body = updatedTask.toJSON()
-  } else {
-    ctx.status = 404
+  if (Object.values(payload).length === 0) {
+    throw new ServiceError(400, 'No data to update')
+  }
+
+  try {
+    const validated = await taskUpdateSchema.validateAsync(payload)
+    const updatedTask = await Task.findOneAndUpdate({ id }, validated, { new: true })
+    if (updatedTask) {
+      ctx.body = updatedTask.toJSON()
+    } else {
+      ctx.status = 404
+    }
+  } catch (err) {
+    const validationError = err as ValidationError
+    if (validationError.isJoi) {
+      throw new ServiceError(400, validationError.message)
+    }
   }
 }
 

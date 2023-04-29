@@ -3,11 +3,13 @@ import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import mongoose from 'mongoose'
 import router from './routes'
+import errorHandler from './@types/errorHandler'
 
 dotenv.config()
 
 const app = new Koa()
 
+app.use(errorHandler)
 app.use(bodyParser())
 
 app.use(router.routes())

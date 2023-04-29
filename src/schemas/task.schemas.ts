@@ -1,9 +1,9 @@
-import Joi, { boolean } from 'joi'
+import Joi from 'joi'
 
 const taskBaseSchema = {
   title: Joi.string(),
   description: Joi.string(),
-  done: boolean()
+  done: Joi.boolean()
 }
 
 export const taskCreateSchema = Joi.object({
@@ -11,4 +11,4 @@ export const taskCreateSchema = Joi.object({
   title: Joi.string().required()
 })
 
-export const taskUpdateSchema = Joi.object(taskBaseSchema)
+export const taskUpdateSchema = Joi.object(taskBaseSchema).required()
