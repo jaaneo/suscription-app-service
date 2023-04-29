@@ -2,11 +2,11 @@ import { ValidationError } from 'joi'
 import { Context } from 'koa'
 import type { MongoServerError } from 'mongodb'
 import { nanoid } from 'nanoid'
-import bcrypt from 'bcryptjs'
 import { UserCreateDTO } from '../../@types/dto'
 import { authRegisterSchema } from '../../schemas/authschemas'
 import User from '../../models/User'
 import ServiceError from '../../errors/ServiceError'
+import { hashPassword } from '../../utils/bcrypt'
 
 async function register (ctx: Context) {
   const payload = ctx.request.body as UserCreateDTO
@@ -14,9 +14,11 @@ async function register (ctx: Context) {
   try {
     const validated: UserCreateDTO = await authRegisterSchema.validateAsync(payload)
 
+    const hashedPassword = await hashPassword(validated.password)
     const newUser = new User({
       id: nanoid(),
-      ...validated
+      ...validated,
+      password: hashedPassword
     })
     const response = await newUser.save()
     ctx.body = response
