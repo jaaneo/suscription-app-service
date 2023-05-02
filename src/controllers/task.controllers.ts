@@ -8,7 +8,7 @@ import ServiceError from '../errors/ServiceError'
 
 async function getAllTasks (ctx: Context) {
   const userId = ctx.state.user.id
-  const tasks = await Task.find(userId)
+  const tasks = await Task.find({ userId })
   const jsonTasks = tasks.map(task => task.toJSON())
   ctx.body = jsonTasks
 }
