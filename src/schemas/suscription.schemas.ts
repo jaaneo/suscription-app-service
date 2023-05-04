@@ -11,7 +11,7 @@ const suscriptionBaseSchema = {
 
 export const suscriptionCreateSchema = Joi.object({
   ...suscriptionBaseSchema,
-  title: Joi.string().required()
+  name: Joi.string().required()
 })
 
 export const suscriptionUpdateSchema = Joi.object(suscriptionBaseSchema).required()
