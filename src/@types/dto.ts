@@ -1,13 +1,19 @@
-export interface TaskInputDTO {
-  title: string,
-  description?: string,
+export interface SuscriptionInputDTO {
+  name: string,
+  description: string,
+  datePayment: string,
+  image: string,
+  type: string,
   done?: boolean
 }
 
-export interface TastOutputDTO {
+export interface SuscriptionOutputDTO {
   id: string,
-  title: string,
+  name: string,
   description: string,
+  datePayment: string,
+  image: string,
+  type: string,
   done: boolean
 }
 

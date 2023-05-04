@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import taskRoutes from './task.routes'
+import suscriptionRoutes from './suscription.routes'
 import authRoutes from './auth.routes'
 import authHandler from '../middleware/authHandler'
 
@@ -9,7 +9,7 @@ router.get('/ping', async ctx => {
   ctx.body = 'pong'
 })
 
-router.use('/v1/tasks', authHandler, taskRoutes.routes())
-router.use('/v1/auth', authRoutes.routes())
+router.use('/api/suscriptions', authHandler, suscriptionRoutes.routes())
+router.use('/api/auth', authRoutes.routes())
 
 export default router

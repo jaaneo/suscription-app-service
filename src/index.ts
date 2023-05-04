@@ -20,8 +20,8 @@ app.use(router.allowedMethods())
 mongoose.connect(process.env.MONGO_URI || '')
   .then(() => {
     console.log('Connected to MondoDB')
-    app.listen(4000, () => {
-      console.log('server is runnig on port 4000')
+    app.listen(process.env.PORT, () => {
+      console.log('server is runnig on port 4500')
     })
   })
   .catch(err => {
