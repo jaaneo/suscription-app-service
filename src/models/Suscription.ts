@@ -6,7 +6,7 @@ const SuscriptionSchema = new mongoose.Schema({
   description: String,
   datePayment: String,
   image: String,
-  type: String,
+  amount: String,
   done: Boolean,
   userId: { type: String, required: true }
 })

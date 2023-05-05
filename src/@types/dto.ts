@@ -3,7 +3,7 @@ export interface SuscriptionInputDTO {
   description: string,
   datePayment: string,
   image: string,
-  type: string,
+  amount: string,
   done?: boolean
 }
 
@@ -13,7 +13,7 @@ export interface SuscriptionOutputDTO {
   description: string,
   datePayment: string,
   image: string,
-  type: string,
+  amount: string,
   done: boolean
 }
 

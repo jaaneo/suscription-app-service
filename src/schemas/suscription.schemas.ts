@@ -5,7 +5,7 @@ const suscriptionBaseSchema = {
   description: Joi.string(),
   datePayment: Joi.string(),
   image: Joi.string(),
-  type: Joi.string(),
+  amount: Joi.string(),
   done: Joi.boolean()
 }
 
